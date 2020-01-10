@@ -1,0 +1,17 @@
+--- ocsinventory-client.pl	2009-06-18 16:38:45.000000000 -0500
++++ ocsinventory-client.pl	2011-06-20 11:19:39.827604493 -0500
+@@ -9,10 +9,12 @@
+     ($ver,$patch) = split('\.',$]);
+     $newversion = $ver . "." . (substr($patch,0,3) + 0) . "." .  (substr($patch,3,3) + 0);
+     chomp($proctype =`/bin/uname -i`);
++#added /usr/lib64/perl5 and /usr/lib/perl5 for SLF 6 to find Config.pm
++#added /usr/share/perl5 for SLF 6 to find strict.pm
+     if ($proctype eq "x86_64") {
+-       @INC=("/usr/lib64/perl5/$newversion/x86_64-linux-thread-multi", "/usr/lib/perl5/$newversion", "/usr/lib64/perl5/site_perl/$newversion/x86_64-linux-thread-multi", "/usr/lib/perl5/site_perl/$newversion", "/usr/lib64/perl5/vendor_perl/$newversion/x86_64-linux-thread-multi", "/usr/lib/perl5/vendor_perl/$newversion")
++       @INC=("/usr/lib64/perl5/$newversion/x86_64-linux-thread-multi", "/usr/lib/perl5/$newversion", "/usr/lib64/perl5/site_perl/$newversion/x86_64-linux-thread-multi", "/usr/lib/perl5/site_perl/$newversion", "/usr/lib64/perl5/vendor_perl/$newversion/x86_64-linux-thread-multi", "/usr/lib/perl5/vendor_perl/$newversion" , "/usr/lib64/perl5" , "/usr/share/perl5")
+   } else    {
+-       @INC=("/usr/lib/perl5/$newversion/$proctype-linux-thread-multi", "/usr/lib/perl5/$newversion", "/usr/lib/perl5/site_perl/$newversion/$proctype-linux-thread-multi", "/usr/lib/perl5/site_perl/$newversion", "/usr/lib/perl5/vendor_perl/$newversion/$proctype-linux-thread-multi", "/usr/lib/perl5/vendor_perl/$newversion")
++       @INC=("/usr/lib/perl5/$newversion/$proctype-linux-thread-multi", "/usr/lib/perl5/$newversion", "/usr/lib/perl5/site_perl/$newversion/$proctype-linux-thread-multi", "/usr/lib/perl5/site_perl/$newversion", "/usr/lib/perl5/vendor_perl/$newversion/$proctype-linux-thread-multi", "/usr/lib/perl5/vendor_perl/$newversion" , "/usr/lib/perl5" , "/usr/share/perl5")
+             }
+   }
+     	}

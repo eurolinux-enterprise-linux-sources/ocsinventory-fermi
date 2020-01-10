@@ -1,0 +1,51 @@
+--- ../BUILD/ocsinventory-fermi-0.9.9/ocsinventory-client.pl	2011-06-20 11:32:08.944592655 -0500
++++ ocsinventory-client.pl	2011-06-20 11:55:27.666604357 -0500
+@@ -165,7 +165,8 @@
+ #Setting binaries locations
+ my $dmidecode_path 	= &_get_path('dmidecode');
+ my $ifconfig_path 	= &_get_path('ifconfig');
+-my $ipdiscover_path 	= &_get_path('ipdiscover');
++#my $ipdiscover_path 	= &_get_path('ipdiscover');
++my $ipdiscover_path 	= 'ipdiscover';
+ my $route_path		= &_get_path('route');
+ my $df_path		= &_get_path('df');
+ my $lspci_path		= &_get_path('lspci');
+@@ -1190,12 +1191,13 @@
+ 
+ 	$xml = XML::Simple::XMLin( $content, ForceArray => ['OPTION'] );
+ 
+-	# Options management (ipdiscover only is implemented at this time)
+-	for(@{$xml->{OPTION}}){
+-	  if( $_->{NAME} =~/ipdiscover/i){
+-	    $options{'ipdiscover'} = $_->{PARAM};
+-	  }
+-	}
++#CJS disable ipdiscover option
++#	# Options management (ipdiscover only is implemented at this time)
++#	for(@{$xml->{OPTION}}){
++#	  if( $_->{NAME} =~/ipdiscover/i){
++#	    $options{'ipdiscover'} = $_->{PARAM};
++#	  }
++#	}
+ 
+ 	if($xml->{RESPONSE} eq 'STOP'){
+ 		print localtime()." => Inventory not generated, command by server...\n";
+@@ -1303,12 +1305,12 @@
+ 			}
+ 		}
+ 			
+-		# IPDISCOVER AGENT
+-		if($ISversion){
+-			if($ipdiscover_path){
+-				$ipflag = 1 unless &_update_file($ipdiscover_path, $ISversion);
+-			}
+-		}
++#		# IPDISCOVER AGENT
++#		if($ISversion){
++#			if($ipdiscover_path){
++#				$ipflag = 1 unless &_update_file($ipdiscover_path, $ISversion);
++#			}
++#		}
+ 		
+ 		# Writing new versions to .conf
+ 		if($ipflag or $dmiflag){
